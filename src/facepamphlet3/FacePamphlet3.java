@@ -24,7 +24,7 @@ import javax.swing.*;
 
 /**
  *
- * @author ECE
+ * @author cobalt mkc 2017
  */
 public class FacePamphlet3 extends Program implements FacePamphletConstants {
 
