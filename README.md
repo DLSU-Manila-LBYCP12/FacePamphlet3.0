@@ -1,6 +1,6 @@
 # FacePamphlet3.0 (ONLINE version)
 
-Inspired by Prof. Mehran Shami's Programming Exercise
+Inspired by Prof. Mehran Sahami's Programming Exercise
 
 ![](https://github.com/melvincabatuan/FacePamphlet3.0/blob/master/capture/captue1.png)
 
