@@ -19,9 +19,6 @@ import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
-
-
 /**
  *
  * @author cobalt mkc 2017
@@ -86,7 +83,7 @@ public class FacePamphlet3 extends Program implements FacePamphletConstants {
         add(new JButton("Lookup"), NORTH);
 
         /*        GUI WEST : Status Picture AddFriend Unfriend    */
-        /* Change Status */
+ /* Change Status */
         statusField = new JTextField(TEXT_FIELD_SIZE);
         add(statusField, WEST);
         statusField.addActionListener(this);
@@ -181,7 +178,7 @@ public class FacePamphlet3 extends Program implements FacePamphletConstants {
                 Logger.getLogger(FacePamphlet3.class.getName()).log(Level.SEVERE, null, ex);
             }
             nameField.setText("");
-        } else  if (e.getActionCommand().equals("Change Quote") || e.getSource() == quoteField) {
+        } else if (e.getActionCommand().equals("Change Quote") || e.getSource() == quoteField) {
             try {
                 changeQuote();
             } catch (AirtableException ex) {
@@ -244,7 +241,11 @@ public class FacePamphlet3 extends Program implements FacePamphletConstants {
                 if (profileDatabase.containsProfile(friendName)) {
                     if (!isFriend(currentProfile, friendName)) {
                         Profile friend = profileDatabase.getProfileByName(friendName);
-                        currentProfile = profileDatabase.addFriend(currentProfile, friend);
+                        try {
+                            currentProfile = profileDatabase.addFriend(currentProfile, friend);
+                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+                            Logger.getLogger(FacePamphlet3.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         canvas.displayProfile(currentProfile);
                         try {
                             canvas.displayFriends(currentProfile, acquireFriends(currentProfile));
@@ -303,12 +304,17 @@ public class FacePamphlet3 extends Program implements FacePamphletConstants {
             currentProfile = null;
             canvas.removeAll();
             if (profileDatabase.containsProfile(name)) {
+                boolean result = false;
                 try {
-                    profileDatabase.deleteProfile(name);
+                    result = profileDatabase.deleteProfile(name);
                 } catch (AirtableException | HttpResponseException ex) {
                     Logger.getLogger(FacePamphlet3.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                canvas.showMessage("Profile of " + name + " deleted.");
+                if (result) {
+                    canvas.showMessage("Profile of " + name + " deleted.");
+                } else {
+                    canvas.showMessage("Profile of " + name + " is permanent.");
+                }
             } else {
                 canvas.showMessage("A profile with the name " + name + " does not exist.");
             }
@@ -359,7 +365,7 @@ public class FacePamphlet3 extends Program implements FacePamphletConstants {
         }
     }
 
-       private void changeQuote() throws AirtableException {
+    private void changeQuote() throws AirtableException {
         String quote = quoteField.getText();
         if (!(quote.equals(""))) {
             if (currentProfile != null) {

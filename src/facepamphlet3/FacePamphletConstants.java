@@ -28,7 +28,7 @@ public interface FacePamphletConstants {
     /**
      * The height of the application window.
      */
-    public static final int APPLICATION_HEIGHT = 1000;
+    public static final int APPLICATION_HEIGHT = 600;
 
     /**
      * Name of font used to display the application message at the bottom of the
