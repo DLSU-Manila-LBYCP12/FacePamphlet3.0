@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package facepamphlet3;
+package ph.edu.dlsu.datasal.cabatuan.facepamphlet3;
 
 /*
  * File: FacePamphletConstants.java
